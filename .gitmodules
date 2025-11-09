@@ -1,3 +1,6 @@
 [submodule "rustbook"]
 	path = rustbook
 	url = https://github.com/Arjunnaikk/rustbook.git
+[submodule "rustlings"]
+	path = rustlings
+	url = https://github.com/Arjunnaikk/rustlings.git

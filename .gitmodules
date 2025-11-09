@@ -1,0 +1,3 @@
+[submodule "rustbook"]
+	path = rustbook
+	url = https://github.com/Arjunnaikk/rustbook.git

@@ -7,3 +7,6 @@
 [submodule "ackee"]
 	path = ackee
 	url = https://github.com/Arjunnaikk/ackee-sos7.git
+[submodule "meBlog"]
+	path = meBlog
+	url = https://github.com/Arjunnaikk/meBlog-sol.git

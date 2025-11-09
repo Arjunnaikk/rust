@@ -1,0 +1,468 @@
+{
+  "address": "5Egs87GhS4BoSoBhMgw9p23zpEyfBec6UcsVKsmQioEX",
+  "metadata": {
+    "name": "meblog",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "create_blog",
+      "discriminator": [
+        221,
+        118,
+        241,
+        5,
+        53,
+        181,
+        90,
+        253
+      ],
+      "accounts": [
+        {
+          "name": "blog_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  108,
+                  111,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "arg",
+                "path": "title"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "content",
+          "type": "string"
+        },
+        {
+          "name": "is_private",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "delete_blog",
+      "discriminator": [
+        110,
+        242,
+        46,
+        158,
+        112,
+        4,
+        189,
+        122
+      ],
+      "accounts": [
+        {
+          "name": "blog_account",
+          "writable": true
+        },
+        {
+          "name": "creator",
+          "signer": true,
+          "relations": [
+            "blog_account"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "like_blog",
+      "discriminator": [
+        135,
+        108,
+        212,
+        205,
+        27,
+        188,
+        171,
+        54
+      ],
+      "accounts": [
+        {
+          "name": "blog_account",
+          "writable": true
+        },
+        {
+          "name": "like_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  105,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "account",
+                "path": "blog_account"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "save_blog",
+      "discriminator": [
+        48,
+        101,
+        189,
+        236,
+        180,
+        65,
+        116,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "blog_account"
+        },
+        {
+          "name": "saved_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  97,
+                  118,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "account",
+                "path": "blog_account"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "BlogState",
+      "discriminator": [
+        244,
+        86,
+        195,
+        29,
+        196,
+        144,
+        214,
+        46
+      ]
+    },
+    {
+      "name": "LikeState",
+      "discriminator": [
+        168,
+        216,
+        170,
+        133,
+        80,
+        166,
+        248,
+        98
+      ]
+    },
+    {
+      "name": "SavedState",
+      "discriminator": [
+        173,
+        204,
+        95,
+        156,
+        32,
+        181,
+        172,
+        239
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "BlogEvent",
+      "discriminator": [
+        42,
+        72,
+        114,
+        226,
+        64,
+        102,
+        81,
+        206
+      ]
+    },
+    {
+      "name": "LikeEvent",
+      "discriminator": [
+        134,
+        155,
+        94,
+        165,
+        4,
+        38,
+        255,
+        145
+      ]
+    },
+    {
+      "name": "SaveEvent",
+      "discriminator": [
+        225,
+        146,
+        7,
+        52,
+        168,
+        122,
+        31,
+        92
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "PrivateBlogNotLikeable",
+      "msg": "Cannot like or unlike private blogs"
+    },
+    {
+      "code": 6001,
+      "name": "CannotLikeOwnBlog",
+      "msg": "Cannot like your own blog"
+    },
+    {
+      "code": 6002,
+      "name": "TitleTooLong",
+      "msg": "Title exceeds maximum allowed length (100 characters)"
+    },
+    {
+      "code": 6003,
+      "name": "ContentEmpty",
+      "msg": "Content cannot be empty"
+    },
+    {
+      "code": 6004,
+      "name": "ContentTooLong",
+      "msg": "Content exceeds maximum allowed length (1000 characters)"
+    }
+  ],
+  "types": [
+    {
+      "name": "BlogEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "blog_id",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "is_private",
+            "type": "bool"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BlogState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "is_private",
+            "type": "bool"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "like_count",
+            "type": "u64"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "content",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LikeEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "blog_id",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "action",
+            "type": "string"
+          },
+          {
+            "name": "like_count",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LikeState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "blog",
+            "type": "pubkey"
+          },
+          {
+            "name": "is_liked",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SaveEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "blog_id",
+            "type": "pubkey"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "action",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SavedState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "blog",
+            "type": "pubkey"
+          },
+          {
+            "name": "saved_at",
+            "type": "i64"
+          },
+          {
+            "name": "is_saved",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ]
+}

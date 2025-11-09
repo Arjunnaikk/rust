@@ -4,3 +4,6 @@
 [submodule "rustlings"]
 	path = rustlings
 	url = https://github.com/Arjunnaikk/rustlings.git
+[submodule "ackee"]
+	path = ackee
+	url = https://github.com/Arjunnaikk/ackee-sos7.git
